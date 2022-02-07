@@ -10,11 +10,14 @@ public class PlayerController : MonoBehaviour
     public bool inAir = false;
     public bool grounded = true;
     public bool jump = false;
+    public bool slide = false;
     bool JumpState;
     public int dash;
     public int dashForce;
     bool isDead  = false;
+    bool powerUp = false;
     public int Velocity;
+    int currentVelocity;
     // Start is called before the first frame update
     void Start()
     {
@@ -26,6 +29,8 @@ public class PlayerController : MonoBehaviour
     {
         animator.SetBool("inAir",inAir);
         animator.SetBool("jump",jump);
+        animator.SetBool("slide",slide);
+        animator.SetBool("powerUp", powerUp);
         Debug.Log(grounded);
         Debug.Log(inAir);
         if(Input.GetKeyDown("space") && grounded == true && isDead ==false)
@@ -39,18 +44,18 @@ public class PlayerController : MonoBehaviour
             animator.SetBool("isDead",isDead);
 
         }
+        if(Input.GetKeyDown("r") && grounded == true&& isDead ==false)
+        {
+            slide = true;
+            StartCoroutine(TiempoSlide());
+        }
         else if(Input.GetKeyDown("d")&& isDead == true)
         {
             isDead = false;
             animator.SetBool("isDead", isDead);
             
         }
-//Codigo de Dash
-        // if(Input.GetKeyDown("a")&& dash > 0)
-        // {
-        //     this.GetComponent<Rigidbody2D>().velocity = transform.right * dashForce;
-        // }
-        
+
         if(isDead == false)
         this.GetComponent<Rigidbody2D>().velocity = new Vector2(Velocity, this.GetComponent<Rigidbody2D>().velocity.y);
         
@@ -59,21 +64,45 @@ public class PlayerController : MonoBehaviour
     
     private void OnTriggerEnter2D(Collider2D collider) 
     {
+
+        if(collider.CompareTag("ground"))
+        {
         grounded = true;
         inAir =false;
         jump =false;
         JumpState = false;
-        if(collider.tag == "Obstaculo")
+
+        }
+        while(!powerUp){
+        if(collider.tag == "Obstaculo" && slide == true)
         {
-            isDead=true;
-            animator.SetBool("isDead", isDead);
-            StartCoroutine(TiempoMuerto());
+         deathSecuence();
+        }
+        if(collider.tag == "Obstaculo"  | collider.tag == "Tronco" && slide == false )
+        {
+            deathSecuence();
          
         }
         if(collider.CompareTag("Buff"))
         {
-            dash++;
+            int currentVelocity = Velocity;
+            Velocity = Velocity + Velocity/2;
+            powerUp= true;
+            StartCoroutine(TiempoBuff());
         }
+        }
+    }
+    private void deathSecuence()
+    {
+        isDead=true;
+            animator.SetBool("isDead", isDead);
+            StartCoroutine(TiempoMuerto());
+         
+    }
+    IEnumerator TiempoSlide()
+    {
+        yield return new WaitForSeconds(1.5f);
+        slide = false;
     }
     IEnumerator TiempoMuerto()
     {
@@ -81,13 +110,28 @@ public class PlayerController : MonoBehaviour
         yield return new WaitForSeconds(1);
         GameObject.Destroy(this.gameObject);
     }
+    IEnumerator TiempoBuff()
+    {
+        yield return new WaitForSeconds(10);
+        Velocity = currentVelocity;
+        powerUp = false;
+
+    }
     
     private void OnTriggerExit2D(Collider2D collider) {
-        grounded  =false;
-        inAir =true;
+       
+        // StartCoroutine(TiempoEntrePlataformas());
+        //  grounded  =false;
+        //  inAir =true;
+        if(!JumpState)
+        {
+
+        }
         if(JumpState == true)
         {
             jump =true;
+            grounded  =false;
+         inAir =true;
         }
         
     }
