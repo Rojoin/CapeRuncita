@@ -6,6 +6,7 @@ public class PlayerController : MonoBehaviour
 {
 
     [SerializeField] Animator animator;
+    [SerializeField] Animator animator2;
     public int Jump;
     public bool inAir = false;
     public bool grounded = true;
@@ -42,6 +43,7 @@ public class PlayerController : MonoBehaviour
         {
             isDead = true;
             animator.SetBool("isDead",isDead);
+            
 
         }
         if(Input.GetKeyDown("r") && grounded == true&& isDead ==false)
@@ -53,6 +55,7 @@ public class PlayerController : MonoBehaviour
         {
             isDead = false;
             animator.SetBool("isDead", isDead);
+            
             
         }
 
@@ -73,7 +76,8 @@ public class PlayerController : MonoBehaviour
         JumpState = false;
 
         }
-        while(!powerUp){
+        if(!powerUp)
+        {
         if(collider.tag == "Obstaculo" && slide == true)
         {
          deathSecuence();
@@ -85,17 +89,24 @@ public class PlayerController : MonoBehaviour
         }
         if(collider.CompareTag("Buff"))
         {
-            int currentVelocity = Velocity;
+            currentVelocity = Velocity;
             Velocity = Velocity + Velocity/2;
             powerUp= true;
+            Debug.Log(powerUp);
+            DestroyObject(collider.gameObject);
             StartCoroutine(TiempoBuff());
         }
         }
+        
+    }
+    private void OnDestroy() {
+        animator2.SetBool("playerDeath", isDead);
     }
     private void deathSecuence()
     {
         isDead=true;
             animator.SetBool("isDead", isDead);
+            
             StartCoroutine(TiempoMuerto());
          
     }
@@ -112,9 +123,13 @@ public class PlayerController : MonoBehaviour
     }
     IEnumerator TiempoBuff()
     {
-        yield return new WaitForSeconds(10);
+        yield return new WaitForSeconds(5);
         Velocity = currentVelocity;
         powerUp = false;
+        grounded = true;
+        inAir =false;
+        jump =false;
+        JumpState = false;
 
     }
     

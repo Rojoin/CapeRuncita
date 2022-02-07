@@ -155,7 +155,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 4.8, y: 3.64}
+    oldSize: {x: 7.3299994, y: 6.330371}
     newSize: {x: 1.55, y: 1.55}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -164,6 +164,63 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 7.3299994, y: 0.6883414}
   m_EdgeRadius: 0
+--- !u!1001 &415864015
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 4894941714765904350, guid: bd2b4665a2e6f8b4f94b3b29fbfe4e4b, type: 3}
+      propertyPath: m_RootOrder
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4894941714765904350, guid: bd2b4665a2e6f8b4f94b3b29fbfe4e4b, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 5.56
+      objectReference: {fileID: 0}
+    - target: {fileID: 4894941714765904350, guid: bd2b4665a2e6f8b4f94b3b29fbfe4e4b, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 1.07
+      objectReference: {fileID: 0}
+    - target: {fileID: 4894941714765904350, guid: bd2b4665a2e6f8b4f94b3b29fbfe4e4b, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 7.6376066
+      objectReference: {fileID: 0}
+    - target: {fileID: 4894941714765904350, guid: bd2b4665a2e6f8b4f94b3b29fbfe4e4b, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4894941714765904350, guid: bd2b4665a2e6f8b4f94b3b29fbfe4e4b, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4894941714765904350, guid: bd2b4665a2e6f8b4f94b3b29fbfe4e4b, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4894941714765904350, guid: bd2b4665a2e6f8b4f94b3b29fbfe4e4b, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4894941714765904350, guid: bd2b4665a2e6f8b4f94b3b29fbfe4e4b, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4894941714765904350, guid: bd2b4665a2e6f8b4f94b3b29fbfe4e4b, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4894941714765904350, guid: bd2b4665a2e6f8b4f94b3b29fbfe4e4b, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4894941714765904418, guid: bd2b4665a2e6f8b4f94b3b29fbfe4e4b, type: 3}
+      propertyPath: m_Name
+      value: Manzana_0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: bd2b4665a2e6f8b4f94b3b29fbfe4e4b, type: 3}
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
@@ -276,7 +333,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 519420028}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -4.87, y: 0.7399998, z: -10}
+  m_LocalPosition: {x: -4.8699994, y: 0.7399998, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1651643097}
@@ -354,7 +411,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1360674773}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -4.87, y: 0.7399998, z: -10}
+  m_LocalPosition: {x: -4.8699994, y: 0.7399998, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1566654951}
@@ -443,7 +500,7 @@ Transform:
   m_LocalScale: {x: 0.3734, y: 0.3734, z: 0.3734}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!61 &1400002663
 BoxCollider2D:
@@ -518,8 +575,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1436314858}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -5.52, y: -0.42, z: 10}
-  m_LocalScale: {x: 1.814224, y: 2.0349019, z: 1.3334}
+  m_LocalPosition: {x: -0.08, y: 0.45, z: 0}
+  m_LocalScale: {x: 1.1601404, y: 1.301257, z: 0.8526683}
   m_Children: []
   m_Father: {fileID: 519420032}
   m_RootOrder: 1
@@ -956,6 +1013,10 @@ PrefabInstance:
       propertyPath: animator
       value: 
       objectReference: {fileID: 105367532}
+    - target: {fileID: 7139960019547071044, guid: 0c2280b408dfbd0498ee758c05b7e45d, type: 3}
+      propertyPath: animator2
+      value: 
+      objectReference: {fileID: 1436314861}
     - target: {fileID: 7139960019547071045, guid: 0c2280b408dfbd0498ee758c05b7e45d, type: 3}
       propertyPath: m_Name
       value: Caperucita
