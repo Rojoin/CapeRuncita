@@ -83,6 +83,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: Suelo 2
       objectReference: {fileID: 0}
+    - target: {fileID: 3754851038841590609, guid: cc6fe1fb9e41e0142913071e91373a1a, type: 3}
+      propertyPath: m_Size.x
+      value: 3.0669625
+      objectReference: {fileID: 0}
+    - target: {fileID: 3754851038841590609, guid: cc6fe1fb9e41e0142913071e91373a1a, type: 3}
+      propertyPath: m_Offset.x
+      value: 0.16683328
+      objectReference: {fileID: 0}
     - target: {fileID: 4512686464199170687, guid: cc6fe1fb9e41e0142913071e91373a1a, type: 3}
       propertyPath: m_Name
       value: Suelo 2 Variant
@@ -90,6 +98,14 @@ PrefabInstance:
     - target: {fileID: 5225402076520662468, guid: cc6fe1fb9e41e0142913071e91373a1a, type: 3}
       propertyPath: size
       value: 16
+      objectReference: {fileID: 0}
+    - target: {fileID: 6942336951885421465, guid: cc6fe1fb9e41e0142913071e91373a1a, type: 3}
+      propertyPath: m_Size.x
+      value: 2.9626937
+      objectReference: {fileID: 0}
+    - target: {fileID: 6942336951885421465, guid: cc6fe1fb9e41e0142913071e91373a1a, type: 3}
+      propertyPath: m_Offset.x
+      value: -0.21896553
       objectReference: {fileID: 0}
     - target: {fileID: 6942336951885421466, guid: cc6fe1fb9e41e0142913071e91373a1a, type: 3}
       propertyPath: m_LocalPosition.x

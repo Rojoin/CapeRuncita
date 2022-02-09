@@ -7,6 +7,7 @@ public class PlayerController : MonoBehaviour
 
     [SerializeField] Animator animator;
     [SerializeField] Animator animator2;
+    [SerializeField] SceneController scenes;
     public int Jump;
     public bool inAir = false;
     public bool grounded = true;
@@ -15,10 +16,11 @@ public class PlayerController : MonoBehaviour
     bool JumpState;
     public int dash;
     public int dashForce;
-    bool isDead  = false;
+    public bool isDead  = false;
     bool powerUp = false;
-    public int Velocity;
-    int currentVelocity;
+    bool checkSpeedUp = false;
+    public float Velocity;
+    float currentVelocity;
     // Start is called before the first frame update
     void Start()
     {
@@ -77,37 +79,51 @@ public class PlayerController : MonoBehaviour
 
         }
         if(!powerUp)
-        {
-        if(collider.tag == "Obstaculo" && slide == true)
-        {
-         deathSecuence();
-        }
-        if(collider.tag == "Obstaculo"  | collider.tag == "Tronco" && slide == false )
-        {
-            deathSecuence();
-         
-        }
-        if(collider.CompareTag("Buff"))
-        {
-            currentVelocity = Velocity;
-            Velocity = Velocity + Velocity/2;
-            powerUp= true;
-            Debug.Log(powerUp);
-            DestroyObject(collider.gameObject);
-            StartCoroutine(TiempoBuff());
-        }
-        }
+                    {
+                    if(collider.tag == "Obstaculo" && slide == true)
+                        {
+                            
+                        deathSecuence();
+                        }
+                    if(collider.tag == "Obstaculo"  | collider.tag == "Tronco" && slide == false )
+                        {
+                        deathSecuence();
+                        
+                        }
+                    if(collider.CompareTag("Buff"))
+                        {
+                            currentVelocity = Velocity;
+                            Velocity = Velocity + Velocity/2;
+                            powerUp= true;
+                            Debug.Log(powerUp);
+                            DestroyObject(collider.gameObject);
+                            StartCoroutine(TiempoBuff());
+                        }
+            }
         
     }
+    public void modifyVelocity(float newVelocity)
+    {
+        if(powerUp)
+        {
+           checkSpeedUp=true;
+        }
+        if(!powerUp)
+        {
+        Velocity += newVelocity;
+        currentVelocity = Velocity;
+        checkSpeedUp = false;
+        }
+    }
     private void OnDestroy() {
-        animator2.SetBool("playerDeath", isDead);
+        
     }
     private void deathSecuence()
     {
         isDead=true;
-            animator.SetBool("isDead", isDead);
-            
-            StartCoroutine(TiempoMuerto());
+        animator2.SetBool("playerDeath", isDead);
+        animator.SetBool("isDead", isDead);
+        //StartCoroutine(TiempoMuerto());
          
     }
     IEnumerator TiempoSlide()
@@ -118,7 +134,7 @@ public class PlayerController : MonoBehaviour
     IEnumerator TiempoMuerto()
     {
         
-        yield return new WaitForSeconds(1);
+        yield return new WaitForSeconds(5);
         GameObject.Destroy(this.gameObject);
     }
     IEnumerator TiempoBuff()
@@ -130,6 +146,10 @@ public class PlayerController : MonoBehaviour
         inAir =false;
         jump =false;
         JumpState = false;
+        if(checkSpeedUp)
+        {
+            modifyVelocity(scenes.velocidadNueva);
+        }
 
     }
     

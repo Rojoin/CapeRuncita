@@ -166,6 +166,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: Obstaculo_2_0 (3)
       objectReference: {fileID: 0}
+    - target: {fileID: 6365135069703142451, guid: 4bd803161087f65448774e82ad6b4433, type: 3}
+      propertyPath: m_Size.x
+      value: 2.89741
+      objectReference: {fileID: 0}
+    - target: {fileID: 6365135069703142451, guid: 4bd803161087f65448774e82ad6b4433, type: 3}
+      propertyPath: m_Offset.x
+      value: 0.055913866
+      objectReference: {fileID: 0}
     - target: {fileID: 6365135069703142460, guid: 4bd803161087f65448774e82ad6b4433, type: 3}
       propertyPath: m_RootOrder
       value: 1
