@@ -84,6 +84,10 @@ public class PlayerController : MonoBehaviour
         if(collider.CompareTag("House"))
         {
             enterHouse();
+          grounded = true;
+          inAir =false;
+          jump =false;
+          JumpState = false;
         }
         if(collider.CompareTag("ground"))
         {
@@ -117,19 +121,20 @@ public class PlayerController : MonoBehaviour
             }
         
     }
-    public void modifyVelocity(float newVelocity)
-    {
-        if(powerUp)
-        {
-           checkSpeedUp=true;
-        }
-        if(!powerUp)
-        {
-        Velocity += newVelocity;
-        currentVelocity = Velocity;
-        checkSpeedUp = false;
-        }
-    }
+    //Aumento de velocidad gradual basado en el tiempo, descartado por encontrar un mejor modo.
+    // public void modifyVelocity(float newVelocity)
+    // {
+    //     if(powerUp)
+    //     {
+    //        checkSpeedUp=true;
+    //     }
+    //     if(!powerUp)
+    //     {
+    //     Velocity += newVelocity;
+    //     currentVelocity = Velocity;
+    //     checkSpeedUp = false;
+    //     }
+    // }
     private void OnDestroy() {
         
     }
@@ -144,9 +149,10 @@ public class PlayerController : MonoBehaviour
     
     public void enterHouse()
     {
-        inHouse = true;
         currentVelocity = Velocity;
-        Velocity = 0;
+        Velocity = Velocity/2;
+        StartCoroutine(llegaraCasa());
+        inHouse = true;
         scenes.timerActive= false;
         scenes.nextUpdate = scenes.nextUpdate+10;
 
@@ -159,6 +165,11 @@ public class PlayerController : MonoBehaviour
         scenes.timerActive= true;
             inHouse = false;
         
+    }
+    IEnumerator llegaraCasa()
+    {
+        yield return new WaitForSeconds(1);
+        Velocity = 0;
     }
     IEnumerator TiempoSlide()
     {
@@ -180,10 +191,7 @@ public class PlayerController : MonoBehaviour
         inAir =false;
         jump =false;
         JumpState = false;
-        if(checkSpeedUp)
-        {
-            modifyVelocity(scenes.velocidadNueva);
-        }
+       
 
     }
     

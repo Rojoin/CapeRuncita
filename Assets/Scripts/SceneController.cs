@@ -18,11 +18,11 @@ public class SceneController : MonoBehaviour
     private Time time;
     public int Timer;
     
-    bool timerActive = false;
+    public bool timerActive = false;
     public float currentTime;
     public int startSeconds =0;
-    float nextUpdate =10;
-    public float velocidadNueva = 2;
+    public float nextUpdate =10;
+    int prefabIndex;
 
     // Start is called before the first frame update
     void Start()
@@ -35,15 +35,30 @@ public class SceneController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        if(timerActive)
+        {
+            currentTime +=1 * Time.deltaTime;
+            tiempoTranscurrido.text = currentTime.ToString("000");
+
+            if(currentTime > nextUpdate)
+            {
+                timerActive = false;
+                
+               
+            }
+        }
         
         
         while(!player.isDead && pointer<jugador.transform.position.x + safeArea)
         {
-            int prefabIndex = Random.Range(0,customPrefabs.Length-1);
+            prefabIndex = Random.Range(0,customPrefabs.Length-2);
             if(pointer < 0)
             {
                 prefabIndex =3;
+            }
+            if(!timerActive)
+            {
+                prefabIndex =4;
             }
             GameObject objetoBloque = Instantiate(customPrefabs[prefabIndex]);
             objetoBloque.transform.SetParent(this.transform);
@@ -55,6 +70,6 @@ public class SceneController : MonoBehaviour
             pointer+=bloque.size;
         }
     }
-
+ 
 
 }
