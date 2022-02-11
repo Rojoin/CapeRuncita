@@ -1103,6 +1103,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   tiempoTranscurrido: {fileID: 1843791833}
+  puntos: {fileID: 0}
   player: {fileID: 105367527}
   jugador: {fileID: 105367526}
   mainCamera: {fileID: 519420031}
@@ -1119,6 +1120,7 @@ MonoBehaviour:
   currentTime: 0
   startSeconds: 0
   nextUpdate: 10
+  puntosActuales: 0
 --- !u!4 &1719626229
 Transform:
   m_ObjectHideFlags: 0

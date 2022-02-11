@@ -10,6 +10,7 @@ TagManager:
   - ground
   - Tronco
   - House
+  - Coin
   layers:
   - Default
   - TransparentFX

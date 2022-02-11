@@ -7,6 +7,7 @@ public class SceneController : MonoBehaviour
 {
 
     [SerializeField] Text tiempoTranscurrido;
+    [SerializeField] Text puntos;
     [SerializeField] PlayerController player;
     
     public GameObject jugador;
@@ -23,6 +24,7 @@ public class SceneController : MonoBehaviour
     public int startSeconds =0;
     public float nextUpdate =10;
     int prefabIndex;
+    public int puntosActuales;
 
     // Start is called before the first frame update
     void Start()

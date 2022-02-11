@@ -97,6 +97,10 @@ public class PlayerController : MonoBehaviour
         JumpState = false;
 
         }
+        if (collider.CompareTag("Coin"))
+        {
+            //scenes.puntosActuales = 
+        }
         if(!powerUp)
                     {
                     if(collider.tag == "Obstaculo" && slide == true)
