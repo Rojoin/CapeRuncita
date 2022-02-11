@@ -9,6 +9,7 @@ TagManager:
   - Buff
   - ground
   - Tronco
+  - House
   layers:
   - Default
   - TransparentFX
