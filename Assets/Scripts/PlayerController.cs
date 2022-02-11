@@ -8,19 +8,26 @@ public class PlayerController : MonoBehaviour
     [SerializeField] Animator animator;
     [SerializeField] Animator animator2;
     [SerializeField] SceneController scenes;
+
+    [Tooltip("El tiempo que dura el slide")]
+    [SerializeField] float tiempoSlide;
+
+    [Tooltip("El tiempo que dura la invinsibilidad")]
+    [SerializeField] float tiempoPowerUp;
+    [Tooltip("Fuerza del salto")]
     public int Jump;
+    [Tooltip("Velocidad Actual")]
+    public float Velocity;
+    float currentVelocity;
     public bool inAir = false;
     public bool grounded = true;
     public bool jump = false;
     public bool slide = false;
     bool JumpState;
-    public int dash;
-    public int dashForce;
     public bool isDead  = false;
     bool powerUp = false;
     bool checkSpeedUp = false;
-    public float Velocity;
-    float currentVelocity;
+    public bool inHouse = false;
     // Start is called before the first frame update
     void Start()
     {
@@ -36,10 +43,14 @@ public class PlayerController : MonoBehaviour
         animator.SetBool("powerUp", powerUp);
         Debug.Log(grounded);
         Debug.Log(inAir);
-        if(Input.GetKeyDown("space") && grounded == true && isDead ==false)
+        if(Input.GetKeyDown("space") && grounded == true && isDead ==false && inHouse==false)
         {
             this.GetComponent<Rigidbody2D>().AddForce(new Vector2(0, Jump));
            JumpState =true;
+        }
+        if(Input.GetKeyDown("space")&& inHouse)
+        {
+            exitHouse();
         }
         if(Input.GetKeyDown("d") && isDead == false)
         {
@@ -70,6 +81,10 @@ public class PlayerController : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D collider) 
     {
 
+        if(collider.CompareTag("House"))
+        {
+            enterHouse();
+        }
         if(collider.CompareTag("ground"))
         {
         grounded = true;
@@ -126,9 +141,28 @@ public class PlayerController : MonoBehaviour
         //StartCoroutine(TiempoMuerto());
          
     }
+    
+    public void enterHouse()
+    {
+        inHouse = true;
+        currentVelocity = Velocity;
+        Velocity = 0;
+        scenes.timerActive= false;
+        scenes.nextUpdate = scenes.nextUpdate+10;
+
+    
+        
+    }
+    public void exitHouse()
+    {
+        Velocity = currentVelocity +2;
+        scenes.timerActive= true;
+            inHouse = false;
+        
+    }
     IEnumerator TiempoSlide()
     {
-        yield return new WaitForSeconds(1.5f);
+        yield return new WaitForSeconds(tiempoSlide);
         slide = false;
     }
     IEnumerator TiempoMuerto()
@@ -139,7 +173,7 @@ public class PlayerController : MonoBehaviour
     }
     IEnumerator TiempoBuff()
     {
-        yield return new WaitForSeconds(5);
+        yield return new WaitForSeconds(tiempoPowerUp);
         Velocity = currentVelocity;
         powerUp = false;
         grounded = true;

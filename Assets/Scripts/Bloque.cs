@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Bloque : MonoBehaviour
 {
-    public int size;
+    public float size;
     // Start is called before the first frame update
     void Start()
     {

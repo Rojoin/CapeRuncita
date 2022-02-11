@@ -35,19 +35,7 @@ public class SceneController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(timerActive)
-        {
-            currentTime +=1 * Time.deltaTime;
-            tiempoTranscurrido.text = currentTime.ToString("000");
-
-            if(currentTime > nextUpdate)
-            {
-                
-                player.modifyVelocity(velocidadNueva);
-                velocidadNueva+=2; 
-                nextUpdate+= 10;
-            }
-        }
+        
         
         
         while(!player.isDead && pointer<jugador.transform.position.x + safeArea)
