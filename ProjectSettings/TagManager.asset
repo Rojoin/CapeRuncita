@@ -11,6 +11,9 @@ TagManager:
   - Tronco
   - House
   - Coin
+  - Salame
+  - Queso
+  - Pan
   layers:
   - Default
   - TransparentFX

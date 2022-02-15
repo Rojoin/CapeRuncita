@@ -19,6 +19,7 @@ public class PlayerController : MonoBehaviour
     [Tooltip("Velocidad Actual")]
     public float Velocity;
     float currentVelocity;
+    public float fallSpeed;
     public bool inAir = false;
     public bool grounded = true;
     public bool jump = false;
@@ -41,11 +42,17 @@ public class PlayerController : MonoBehaviour
         animator.SetBool("jump",jump);
         animator.SetBool("slide",slide);
         animator.SetBool("powerUp", powerUp);
+        animator2.SetBool("playerInHouse",inHouse);
         Debug.Log(grounded);
         Debug.Log(inAir);
         if(Input.GetKeyDown("space") && grounded == true && isDead ==false && inHouse==false)
         {
             this.GetComponent<Rigidbody2D>().AddForce(new Vector2(0, Jump));
+           JumpState =true;
+        }
+        if(Input.GetKeyDown("space") && grounded == false && isDead ==false && inHouse==false)
+        {
+            this.GetComponent<Rigidbody2D>().gravityScale = fallSpeed;
            JumpState =true;
         }
         if(Input.GetKeyDown("space")&& inHouse)
@@ -68,8 +75,7 @@ public class PlayerController : MonoBehaviour
         {
             isDead = false;
             animator.SetBool("isDead", isDead);
-            
-            
+
         }
 
         if(isDead == false)
@@ -88,6 +94,13 @@ public class PlayerController : MonoBehaviour
           inAir =false;
           jump =false;
           JumpState = false;
+          this.GetComponent<Rigidbody2D>().gravityScale= 1;
+          if(powerUp)
+                    {
+                    powerUp =false;
+                    StopCoroutine("TiempoBuff");
+                    }
+
         }
         if(collider.CompareTag("ground"))
         {
@@ -95,11 +108,27 @@ public class PlayerController : MonoBehaviour
         inAir =false;
         jump =false;
         JumpState = false;
+        this.GetComponent<Rigidbody2D>().gravityScale = 1;
 
         }
-        if (collider.CompareTag("Coin"))
+       
+        if (collider.CompareTag("Queso"))
         {
-            //scenes.puntosActuales = 
+            scenes.puntosActuales = scenes.puntosActuales + 10;
+            DestroyObject(collider.gameObject);
+            
+        }
+        if (collider.CompareTag("Salame"))
+        {
+            scenes.puntosActuales = scenes.puntosActuales + 15;
+            DestroyObject(collider.gameObject);
+            
+        }
+        if (collider.CompareTag("Pan"))
+        {
+            scenes.puntosActuales = scenes.puntosActuales + 5;
+            DestroyObject(collider.gameObject);
+            
         }
         if(!powerUp)
                     {
@@ -155,6 +184,7 @@ public class PlayerController : MonoBehaviour
     {
         currentVelocity = Velocity;
         Velocity = Velocity/2;
+        StopCoroutine("TiempoBuff");
         StartCoroutine(llegaraCasa());
         inHouse = true;
         scenes.timerActive= false;
@@ -168,7 +198,7 @@ public class PlayerController : MonoBehaviour
         Velocity = currentVelocity +2;
         scenes.timerActive= true;
             inHouse = false;
-        
+       
     }
     IEnumerator llegaraCasa()
     {

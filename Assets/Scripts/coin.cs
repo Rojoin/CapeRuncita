@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class coin : MonoBehaviour
 {
-    [SerializeField] int puntos;
+    public int puntos;
     // Start is called before the first frame update
     void Start()
     {
