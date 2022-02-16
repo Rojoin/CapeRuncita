@@ -58,6 +58,11 @@ public class PlayerController : MonoBehaviour
         if(Input.GetKeyDown("space")&& inHouse)
         {
             exitHouse();
+            inHouse = false;
+            grounded = true;
+        inAir =false;
+        jump =false;
+        JumpState = false;
         }
         if(Input.GetKeyDown("d") && isDead == false)
         {
@@ -89,12 +94,15 @@ public class PlayerController : MonoBehaviour
 
         if(collider.CompareTag("House"))
         {
+          powerUp =false;
+          animator.SetBool("powerUp", powerUp);
             enterHouse();
           grounded = true;
           inAir =false;
           jump =false;
           JumpState = false;
           this.GetComponent<Rigidbody2D>().gravityScale= 1;
+          StopCoroutine("TiempoBuff");
           if(powerUp)
                     {
                     powerUp =false;
@@ -154,20 +162,7 @@ public class PlayerController : MonoBehaviour
             }
         
     }
-    //Aumento de velocidad gradual basado en el tiempo, descartado por encontrar un mejor modo.
-    // public void modifyVelocity(float newVelocity)
-    // {
-    //     if(powerUp)
-    //     {
-    //        checkSpeedUp=true;
-    //     }
-    //     if(!powerUp)
-    //     {
-    //     Velocity += newVelocity;
-    //     currentVelocity = Velocity;
-    //     checkSpeedUp = false;
-    //     }
-    // }
+    
     private void OnDestroy() {
         
     }
@@ -195,10 +190,13 @@ public class PlayerController : MonoBehaviour
     }
     public void exitHouse()
     {
+        inHouse = false;
         Velocity = currentVelocity +2;
         scenes.timerActive= true;
-            inHouse = false;
-       
+        grounded = true;
+        inAir =false;
+        jump =false;
+        JumpState = false;
     }
     IEnumerator llegaraCasa()
     {
@@ -244,6 +242,9 @@ public class PlayerController : MonoBehaviour
             grounded  =false;
          inAir =true;
         }
-        
+        if(CompareTag("House"))
+        {
+            exitHouse();
+        }
     }
 }
