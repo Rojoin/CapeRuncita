@@ -7,6 +7,8 @@ public class pauseMenu : MonoBehaviour
 {
     public static bool GameIsPaused = false;
     public GameObject pauseMenuUI;
+    [SerializeField] SceneController scenes;
+    
     // Update is called once per frame
     void Update()
     {
@@ -27,20 +29,36 @@ public class pauseMenu : MonoBehaviour
             pauseMenuUI.SetActive(false);
             GameIsPaused = false;
             Time.timeScale = 1f;
+            scenes.timerActive = true;
     }
-    void Pause()
+    public void Pause()
         {
+            scenes.timerActive = false;
             pauseMenuUI.SetActive(true);
             GameIsPaused = true;
             Time.timeScale = 0f;
         }
         public void LoadMenu()
         {
+            afterResume();
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex-1);
+            SceneManager.UnloadSceneAsync(1);
         }
         public void Quitgame()
         {
             Debug.Log("Quit!");
           Application.Quit();
         }
+        public void Retry()
+    {
+        SceneManager.UnloadSceneAsync(1);
+        SceneManager.LoadScene(1);
+         afterResume();
+        
+    }
+    public void afterResume()
+    {
+        GameIsPaused = false;
+        Time.timeScale = 1f;
+    }
     }
