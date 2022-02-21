@@ -3350,6 +3350,10 @@ MonoBehaviour:
   - {fileID: 2894320476627369752, guid: f130837f3b8804f44b6a6293cd95cf17, type: 3}
   - {fileID: 486929689969509797, guid: 31dd0b2910f838147a5bdbf460ebbf30, type: 3}
   - {fileID: 1536283969660134313, guid: ffdc096ffc21b334e96c2539eda49cab, type: 3}
+  coin:
+  - {fileID: 4358695258955339670, guid: e2a6f566f23ce5044bc48e968284651c, type: 3}
+  - {fileID: 3526238570371455035, guid: b7e834399955bf04084e982371fa129d, type: 3}
+  - {fileID: 3420319110518672180, guid: 34740ee63ac33da429b6c1847d19bcd5, type: 3}
   pointer: 0
   safeArea: 12
   Timer: 0

@@ -9,6 +9,11 @@ public class pauseMenu : MonoBehaviour
     public GameObject pauseMenuUI;
     [SerializeField] SceneController scenes;
     
+     /// <summary>
+    /// Start is called on the frame when a script is enabled just before
+    /// any of the Update methods is called the first time.
+    /// </summary>
+    
     // Update is called once per frame
     void Update()
     {
@@ -61,4 +66,15 @@ public class pauseMenu : MonoBehaviour
         GameIsPaused = false;
         Time.timeScale = 1f;
     }
+    public void PauseMenuButton()
+    {
+    if(GameIsPaused)
+            {
+                Resume();
+            }
+            else
+            {
+                Pause();
+            }
     }
+}

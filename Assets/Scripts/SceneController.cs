@@ -14,6 +14,7 @@ public class SceneController : MonoBehaviour
     public Camera mainCamera;
     
     public GameObject[] customPrefabs;
+    public GameObject[] coin;
     public float pointer;
     public float safeArea = 12;
     private Time time;
@@ -72,9 +73,20 @@ public class SceneController : MonoBehaviour
                 0
             );
             pointer+=bloque.size;
+
+            coinSpawner();
         }
     
     }
-    
+    public void coinSpawner()
+    {
+        int  coinGenerator = Random.Range(0,2);
+        GameObject moneda = Instantiate(coin[coinGenerator]);
+            moneda.transform.SetParent(this.transform);
+            coin monedaclase = moneda.GetComponent<coin>();
+            int posicionX = Random.Range(20,40);
+            moneda.transform.position = new Vector2(jugador.transform.position.x + posicionX, jugador.transform.position.y);
+            
+    }
 
 }
