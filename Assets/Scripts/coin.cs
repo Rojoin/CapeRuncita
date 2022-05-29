@@ -20,7 +20,7 @@ public class coin : MonoBehaviour
    
     void OnTriggerEnter2D(Collider2D other)
     {
-        if(CompareTag("Obstaculo") | CompareTag("tronco"))
+        if(CompareTag("Obstaculo") | CompareTag("Tronco"))
         {
             this.transform.position = new Vector2(this.transform.position.x -30, this.transform.position.y);
         }

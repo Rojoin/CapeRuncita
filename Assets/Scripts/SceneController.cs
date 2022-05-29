@@ -15,6 +15,8 @@ public class SceneController : MonoBehaviour
     
     public GameObject[] customPrefabs;
     public GameObject[] coin;
+    public GameObject buff;
+    bool buffSpawned;
     public float pointer;
     public float safeArea = 12;
     private Time time;
@@ -75,12 +77,20 @@ public class SceneController : MonoBehaviour
             pointer+=bloque.size;
 
             coinSpawner();
+            if(!player.powerUp && !buffSpawned)
+            {
+                buffSpawner();
+            }
+            if(player.powerUp)
+            {
+                StartCoroutine("tiempoSpawnBuffo");
+            }
         }
     
     }
     public void coinSpawner()
     {
-        int  coinGenerator = Random.Range(0,2);
+        int  coinGenerator = Random.Range(0,coin.Length);
         GameObject moneda = Instantiate(coin[coinGenerator]);
             moneda.transform.SetParent(this.transform);
             coin monedaclase = moneda.GetComponent<coin>();
@@ -88,5 +98,21 @@ public class SceneController : MonoBehaviour
             moneda.transform.position = new Vector2(jugador.transform.position.x + posicionX, jugador.transform.position.y);
             
     }
-
+    public void buffSpawner()
+    {
+            
+            GameObject manzana = Instantiate(buff);
+            manzana.transform.SetParent(this.transform);
+            
+            int posicionX = Random.Range(40,80);
+            manzana.transform.position = new Vector2(jugador.transform.position.x + posicionX, jugador.transform.position.y);
+            buffSpawned =true;
+    }
+    IEnumerator tiempoSpawnBuffo()
+        {
+            yield return new WaitForSeconds(10);
+            buffSpawned =false;
+        }
 }
+
+

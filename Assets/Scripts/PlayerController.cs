@@ -7,6 +7,8 @@ public class PlayerController : MonoBehaviour
 
     [SerializeField] Animator animator;
     [SerializeField] Animator animator2;
+
+    SoundManager soundManager;
     [SerializeField] SceneController scenes;
 
     [Tooltip("El tiempo que dura el slide")]
@@ -26,10 +28,13 @@ public class PlayerController : MonoBehaviour
     public bool slide = false;
     bool JumpState;
     public bool isDead  = false;
-    bool powerUp = false;
+    public bool powerUp = false;
     bool checkSpeedUp = false;
     public bool inHouse = false;
-    // Start is called before the first frame update
+    
+    private void Awake() {
+        soundManager = FindObjectOfType<SoundManager>();
+    }
     void Start()
     {
        
@@ -42,6 +47,7 @@ public class PlayerController : MonoBehaviour
         animator.SetBool("jump",jump);
         animator.SetBool("slide",slide);
         animator.SetBool("powerUp", powerUp);
+        animator.SetBool("inHouse",inHouse);
         animator2.SetBool("playerInHouse",inHouse);
         Debug.Log(grounded);
         Debug.Log(inAir);
@@ -97,6 +103,7 @@ public class PlayerController : MonoBehaviour
           powerUp =false;
           animator.SetBool("powerUp", powerUp);
             enterHouse();
+            animator.SetBool("inHouse",inHouse);
           grounded = true;
           inAir =false;
           jump =false;
@@ -142,21 +149,24 @@ public class PlayerController : MonoBehaviour
                     {
                     if(collider.tag == "Obstaculo" && slide == true)
                         {
-                            
+                             
                         deathSecuence();
                         }
                     if(collider.tag == "Obstaculo"  | collider.tag == "Tronco" && slide == false )
-                        {
+                        {   Debug.Log("Moriste");
+                            // soundManager.SelecionarAudio(3,0.5f);
                         deathSecuence();
                         
                         }
                     if(collider.CompareTag("Buff"))
                         {
+            
                             currentVelocity = Velocity;
                             Velocity = Velocity + Velocity/2;
                             powerUp= true;
                             Debug.Log(powerUp);
                             DestroyObject(collider.gameObject);
+                             //soundManager.SelecionarAudio(1,0.5f);
                             StartCoroutine(TiempoBuff());
                         }
             }
@@ -191,6 +201,7 @@ public class PlayerController : MonoBehaviour
     public void exitHouse()
     {
         inHouse = false;
+        animator.SetBool("inHouse",inHouse);
         Velocity = currentVelocity +2;
         scenes.timerActive= true;
         grounded = true;
@@ -223,7 +234,7 @@ public class PlayerController : MonoBehaviour
         inAir =false;
         jump =false;
         JumpState = false;
-       
+     //  soundManager.SelecionarAudio(2,0.5f);
 
     }
     
