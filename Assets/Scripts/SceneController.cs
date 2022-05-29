@@ -25,9 +25,9 @@ public class SceneController : MonoBehaviour
     public bool timerActive = false;
     public float currentTime;
     public int startSeconds =0;
-    public float nextUpdate =10;
+    public float nextUpdate =20;
     int prefabIndex;
-    bool casaGenerada;
+ 
     public int puntosActuales;
 
     // Start is called before the first frame update
@@ -46,12 +46,12 @@ public class SceneController : MonoBehaviour
             currentTime +=1 * Time.deltaTime;
             tiempoTranscurrido.text = currentTime.ToString("000");
 
-            if(currentTime > nextUpdate)
-            {
-                timerActive = false;
-                casaGenerada = true;
-               
-            }
+           
+        }
+        if(currentTime == nextUpdate)
+        {
+            player.Velocity = player.Velocity + 0.3f;
+            nextUpdate = nextUpdate +20;
         }
         puntos.text = puntosActuales.ToString();
         
@@ -62,11 +62,8 @@ public class SceneController : MonoBehaviour
             {
                 prefabIndex =8;
             }
-            if(!timerActive && casaGenerada)
-            {
-                prefabIndex =9;
-                casaGenerada =false;
-            }
+            
+            
             GameObject objetoBloque = Instantiate(customPrefabs[prefabIndex]);
             objetoBloque.transform.SetParent(this.transform);
             Bloque bloque = objetoBloque.GetComponent<Bloque>();

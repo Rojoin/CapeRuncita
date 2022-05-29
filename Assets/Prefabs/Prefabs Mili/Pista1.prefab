@@ -10,6 +10,8 @@ GameObject:
   m_Component:
   - component: {fileID: 2045091501186306437}
   - component: {fileID: 7124304722279644384}
+  - component: {fileID: 2812143324052784307}
+  - component: {fileID: -4747038014251432981}
   m_Layer: 0
   m_Name: Pista1
   m_TagString: Untagged
@@ -46,6 +48,30 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   size: 14.41
+--- !u!114 &2812143324052784307
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 486929689969509797}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a7bde127239a6ac469d09cc324243c1c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &-4747038014251432981
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 486929689969509797}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a7bde127239a6ac469d09cc324243c1c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &4827827308074169383
 PrefabInstance:
   m_ObjectHideFlags: 0

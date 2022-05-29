@@ -5,9 +5,12 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
 
+public audioManager audiomanager;
     [SerializeField] Animator animator;
     [SerializeField] Animator animator2;
 
+    [SerializeField]Collider2D cuerpo;
+    [SerializeField]Collider2D pies;
     SoundManager soundManager;
     [SerializeField] SceneController scenes;
 
@@ -22,6 +25,13 @@ public class PlayerController : MonoBehaviour
     public float Velocity;
     float currentVelocity;
     public float fallSpeed;
+    public delegate void RequestingPlayerDies();
+    public static event RequestingPlayerDies OnRequestingPlayerDies;
+    public delegate void RequestingPlayerPickUp();
+    public static event RequestingPlayerDies OnRequestingPlayerPickUp;
+     public delegate void RequestingPlayerDeath();
+    public static event RequestingPlayerDeath OnRequestingPlayerDeath;
+
     public bool inAir = false;
     public bool grounded = true;
     public bool jump = false;
@@ -30,7 +40,7 @@ public class PlayerController : MonoBehaviour
     public bool isDead  = false;
     public bool powerUp = false;
     bool checkSpeedUp = false;
-    public bool inHouse = false;
+   
     
     private void Awake() {
         soundManager = FindObjectOfType<SoundManager>();
@@ -43,33 +53,32 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+
         animator.SetBool("inAir",inAir);
         animator.SetBool("jump",jump);
         animator.SetBool("slide",slide);
         animator.SetBool("powerUp", powerUp);
-        animator.SetBool("inHouse",inHouse);
-        animator2.SetBool("playerInHouse",inHouse);
         Debug.Log(grounded);
         Debug.Log(inAir);
-        if(Input.GetKeyDown("space") && grounded == true && isDead ==false && inHouse==false)
+        if(Input.GetKeyDown("space") && grounded == true && isDead ==false )
         {
             this.GetComponent<Rigidbody2D>().AddForce(new Vector2(0, Jump));
            JumpState =true;
         }
-        if(Input.GetKeyDown("space") && grounded == false && isDead ==false && inHouse==false)
+        if(Input.GetKeyDown("space") && grounded == false && isDead ==false )
         {
             this.GetComponent<Rigidbody2D>().gravityScale = fallSpeed;
            JumpState =true;
         }
-        if(Input.GetKeyDown("space")&& inHouse)
-        {
-            exitHouse();
-            inHouse = false;
-            grounded = true;
-        inAir =false;
-        jump =false;
-        JumpState = false;
-        }
+        // if(Input.GetKeyDown("space")&& inHouse)
+        // {
+        //     exitHouse();
+        //     inHouse = false;
+        //     grounded = true;
+        // inAir =false;
+        // jump =false;
+        // JumpState = false;
+        // }
         if(Input.GetKeyDown("d") && isDead == false)
         {
             isDead = true;
@@ -91,32 +100,32 @@ public class PlayerController : MonoBehaviour
 
         if(isDead == false)
         this.GetComponent<Rigidbody2D>().velocity = new Vector2(Velocity, this.GetComponent<Rigidbody2D>().velocity.y);
-        
+        mantenerBox(cuerpo,pies);
     }
 
     
     private void OnTriggerEnter2D(Collider2D collider) 
     {
 
-        if(collider.CompareTag("House"))
-        {
-          powerUp =false;
-          animator.SetBool("powerUp", powerUp);
-            enterHouse();
-            animator.SetBool("inHouse",inHouse);
-          grounded = true;
-          inAir =false;
-          jump =false;
-          JumpState = false;
-          this.GetComponent<Rigidbody2D>().gravityScale= 1;
-          StopCoroutine("TiempoBuff");
-          if(powerUp)
-                    {
-                    powerUp =false;
-                    StopCoroutine("TiempoBuff");
-                    }
+        // if(collider.CompareTag("House"))
+        // {
+        //   powerUp =false;
+        //   animator.SetBool("powerUp", powerUp);
+        //     enterHouse();
+        //     animator.SetBool("inHouse",inHouse);
+        //   grounded = true;
+        //   inAir =false;
+        //   jump =false;
+        //   JumpState = false;
+        //   this.GetComponent<Rigidbody2D>().gravityScale= 1;
+        //   StopCoroutine("TiempoBuff");
+        //   if(powerUp)
+        //             {
+        //             powerUp =false;
+        //             StopCoroutine("TiempoBuff");
+        //             }
 
-        }
+        // }
         if(collider.CompareTag("ground"))
         {
         grounded = true;
@@ -131,18 +140,20 @@ public class PlayerController : MonoBehaviour
         {
             scenes.puntosActuales = scenes.puntosActuales + 10;
             DestroyObject(collider.gameObject);
+            OnRequestingPlayerPickUp?.Invoke();
             
         }
         if (collider.CompareTag("Salame"))
         {
             scenes.puntosActuales = scenes.puntosActuales + 15;
             DestroyObject(collider.gameObject);
-            
+            OnRequestingPlayerPickUp?.Invoke();
         }
         if (collider.CompareTag("Pan"))
         {
             scenes.puntosActuales = scenes.puntosActuales + 5;
             DestroyObject(collider.gameObject);
+            OnRequestingPlayerPickUp?.Invoke();
             
         }
         if(!powerUp)
@@ -160,10 +171,12 @@ public class PlayerController : MonoBehaviour
                         }
                     if(collider.CompareTag("Buff"))
                         {
-            
+                             OnRequestingPlayerPickUp?.Invoke();
                             currentVelocity = Velocity;
                             Velocity = Velocity + Velocity/2;
                             powerUp= true;
+                            jump =false;
+                        JumpState = false;
                             Debug.Log(powerUp);
                             DestroyObject(collider.gameObject);
                              //soundManager.SelecionarAudio(1,0.5f);
@@ -174,41 +187,19 @@ public class PlayerController : MonoBehaviour
     }
     
     private void OnDestroy() {
-        
+        audiomanager.isPlayerDeath=true;
     }
     private void deathSecuence()
     {
         isDead=true;
         animator2.SetBool("playerDeath", isDead);
         animator.SetBool("isDead", isDead);
+        audiomanager.isPlayerDeath=true;
         //StartCoroutine(TiempoMuerto());
          
     }
     
-    public void enterHouse()
-    {
-        currentVelocity = Velocity;
-        Velocity = Velocity/2;
-        StopCoroutine("TiempoBuff");
-        StartCoroutine(llegaraCasa());
-        inHouse = true;
-        scenes.timerActive= false;
-        scenes.nextUpdate = scenes.nextUpdate+10;
-
-    
-        
-    }
-    public void exitHouse()
-    {
-        inHouse = false;
-        animator.SetBool("inHouse",inHouse);
-        Velocity = currentVelocity +2;
-        scenes.timerActive= true;
-        grounded = true;
-        inAir =false;
-        jump =false;
-        JumpState = false;
-    }
+ 
     IEnumerator llegaraCasa()
     {
         yield return new WaitForSeconds(1);
@@ -253,9 +244,14 @@ public class PlayerController : MonoBehaviour
             grounded  =false;
          inAir =true;
         }
-        if(CompareTag("House"))
+       
+    }
+    void mantenerBox(Collider2D cuerpo, Collider2D pies)
+    {
+        if(jump)
         {
-            exitHouse();
+            cuerpo.offset = new Vector2(-0.5f, cuerpo.offset.y);
+            pies.offset = new Vector2(-0.5f, pies.offset.y);
         }
     }
 }

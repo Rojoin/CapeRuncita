@@ -15,6 +15,7 @@ TagManager:
   - Queso
   - Pan
   - UI}
+  - Destructor
   layers:
   - Default
   - TransparentFX
