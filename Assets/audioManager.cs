@@ -4,29 +4,29 @@ using UnityEngine;
 
 public class audioManager : MonoBehaviour
 {
-   
-     private static audioManager instance;
+
+    private static audioManager instance;
     // Start is called before the first frame update
     void Start()
     {
         myAudio = FindObjectOfType<AudioSource>();
         myAudio.PlayDelayed(10.0f);
     }
-   public bool isPlayerDeath;
+    public bool isPlayerDeath;
     private AudioSource[] allAudioSources;
-public AudioSource myAudio;
-public AudioClip playerDeath;
-public AudioClip deathScreen;
-public AudioClip itemPickUp;
+    public AudioSource myAudio;
+    public AudioClip playerDeath;
+    public AudioClip deathScreen;
+    public AudioClip itemPickUp;
 
     // Update is called once per frame
     void Update()
     {
-        
+
     }
-void awake()
+    void awake()
     {
-        if(instance == null)
+        if (instance == null)
         {
             instance = this;
             DontDestroyOnLoad(instance);
@@ -36,23 +36,23 @@ void awake()
             Destroy(gameObject);
         }
     }
-     private void OnEnable()
-     {
+    private void OnEnable()
+    {
 
-     }
-     private void OnDisable() 
-     {
-         
-     }
-     public void PlayerDies()
-     {
-         myAudio.PlayOneShot(playerDeath);
-     }
-     public void PlayerPickUp()
-     {
+    }
+    private void OnDisable()
+    {
+
+    }
+    public void PlayerDies()
+    {
+        myAudio.PlayOneShot(playerDeath);
+    }
+    public void PlayerPickUp()
+    {
         myAudio.PlayOneShot(itemPickUp);
-     }
-     public void PlayerDeath()
+    }
+    public void PlayerDeath()
     {
         if (isPlayerDeath)
         {
