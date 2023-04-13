@@ -4,121 +4,38 @@ using UnityEngine;
 using UnityEngine.Audio;
 
 public class SoundManager : MonoBehaviour
-{ public static SoundManager Instance;
-    public bool isAudioOn = true;
-    [SerializeField] AudioClip[] fuenteAudio;
+{
+    public static SoundManager Instance;
+    [SerializeField] private AudioSource musicSource;
+    [SerializeField] private AudioSource effectSource;
+    [SerializeField] public AudioClip button;
 
-    private  AudioSource controlador;
-    public bool isPlayerDeath;
-   
 
-public AudioClip playerDeath;
-public AudioClip deathScreen;
-public AudioClip itemPickUp;
-    
-
-    // Start is called before the first frame update
-    private void Awake() 
-    { if(Instance == null)
-            {
-                Instance= this;
-                DontDestroyOnLoad(this.gameObject);
-            }
-            else
-            {
-                Destroy(this.gameObject);
-            }
-        
-        controlador = GetComponent<AudioSource>();
-        
-    }
-    void Update()
+    private void Awake()
     {
-        cambiarAudio();
-    }
-    public void SelecionarAudio(int indice, float volumen)
-    {
-        controlador.PlayOneShot(fuenteAudio[indice],volumen);
-    }
-    public void apagarAudio()
-    {
-        isAudioOn = false;
-    }
-    public void cambiarAudio()
-    {
-        // if(isAudioOn)
-        // {
-        //     isAudioOn = false;
-        //     controlador.mute = true;
-        // }
-        // else if(!isAudioOn)
-        // {
-        //     isAudioOn = true;
-        //     controlador.mute = false;
-        //     Debug.Log("Desmuteado");
-        // }
-        if(isAudioOn)
+        if (Instance == null)
         {
-            AudioListener.volume = 1;
-           // controlador.mute = false;
+            Instance = this;
+            DontDestroyOnLoad(this.gameObject);
         }
-        else{
-            AudioListener.volume = 0;
-           // controlador.mute = true;
-        }
-    }
-     public void changeBoolAudio()
-     {
-         if(isAudioOn)
+        else
         {
-            isAudioOn = false;
+            Destroy(this.gameObject);
         }
-        else{
-            isAudioOn = true;
-            
-        }
-     }
-    IEnumerator audioON()
-    {
-        yield return new WaitForSeconds(0.1f);
 
     }
-    IEnumerator audioOFF()
-    {
-        yield return new WaitForSeconds(0.1f);
-        isAudioOn = true;
-            controlador.mute = false;
 
-    }
-     private void OnEnable()
-     {
-         PlayerController.OnRequestingPlayerDies +=PlayerDies;
-         PlayerController.OnRequestingPlayerPickUp += PlayerPickUp;
-         PlayerController.OnRequestingPlayerDeath += PlayerDeath;
-     }
-     private void OnDisable() 
-     {
-         PlayerController.OnRequestingPlayerDies -=PlayerDies;
-         PlayerController.OnRequestingPlayerPickUp -= PlayerPickUp;
-         PlayerController.OnRequestingPlayerDeath -= PlayerDeath;
-     }
-     public void PlayerDies()
-     {
-         controlador.PlayOneShot(playerDeath);
-     }
-     public void PlayerPickUp()
-     {
-        controlador.PlayOneShot(itemPickUp);
-     }
-     public void PlayerDeath()
+    public void PlaySound(AudioClip clip)
     {
-        if (isPlayerDeath)
-        {
-            //StopAllAudio();
-            controlador.PlayOneShot(playerDeath);
-            isPlayerDeath = true;
-            controlador.PlayOneShot(deathScreen);
-        }
+        effectSource.PlayOneShot(clip);
     }
-    
+
+
+    public void ToggleAudio()
+    {
+        effectSource.mute = !effectSource.mute;
+        musicSource.mute = !musicSource.mute;
+        PlaySound(button);
+    }
+
 }

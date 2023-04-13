@@ -16,15 +16,15 @@ public class box : MonoBehaviour
         
     }
  
-    private void OnCollisionEnter(Collider other) {
-        if(CompareTag("Destructor"))
-        {
-            Debug.Log("a");
-        }
-        else
-        Destroy(other.transform.parent.gameObject);
-        
-    }    
+   // private void OnCollisionEnter(Collider other) {
+   //     if(CompareTag("Destructor"))
+   //     {
+   //         Debug.Log("a");
+   //     }
+   //     else
+   //     Destroy(other.transform.parent.gameObject);
+   //     
+   // }    
     private void OnColissionExit(Collider other) {
         
        Destroy(other.transform.parent.gameObject);
