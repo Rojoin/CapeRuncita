@@ -2,28 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class coin : MonoBehaviour
+public class Coin : MonoBehaviour
 {
-    Collider2D collider;
-    public int puntos;
+    [SerializeField] private Sprite[] sprite;
+    [SerializeField] private SpriteRenderer spriteRenderer;
     // Start is called before the first frame update
     void Start()
     {
-        
+        spriteRenderer = GetComponent<SpriteRenderer>();
+        spriteRenderer.sprite = sprite[Random.Range(0, sprite.Length)];
     }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-   
-    void OnTriggerEnter2D(Collider2D other)
-    {
-        if(CompareTag("Obstaculo") | CompareTag("Tronco"))
-        {
-            this.transform.position = new Vector2(this.transform.position.x -30, this.transform.position.y);
-        }
-    }
-    
 }
