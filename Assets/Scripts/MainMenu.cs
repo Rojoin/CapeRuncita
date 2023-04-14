@@ -14,13 +14,30 @@ public class MainMenu : MonoBehaviour
     {
         ScreenVisibility(screenMenu, !creditsOn);
         ScreenVisibility(screenCredits, creditsOn);
+
+#if UNITY_ANDROID
+
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            if (creditsOn)
+            {
+                ExitGame();
+            }
+            else
+            {
+                SetCredits();
+            }
+
+        }
+#endif
+
     }
     public void PlayGame()
     {
         SoundManager.Instance.PlaySound(SoundManager.Instance.button);
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
     }
-   
+
     public void ExitGame()
     {
         SoundManager.Instance.PlaySound(SoundManager.Instance.button);
