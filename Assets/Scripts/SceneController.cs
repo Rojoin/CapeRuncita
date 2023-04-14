@@ -66,12 +66,9 @@ public class SceneController : MonoBehaviour
             
             GameObject objetoBloque = Instantiate(customPrefabs[prefabIndex]);
             objetoBloque.transform.SetParent(this.transform);
-            Bloque bloque = objetoBloque.GetComponent<Bloque>();
-            objetoBloque.transform.position = new Vector2(
-                pointer+ bloque.size /2,
-                0
-            );
-            pointer+=bloque.size;
+            //     Bloque bloque = objetoBloque.GetComponent<Bloque>();
+            //     objetoBloque.transform.position = new Vector2(pointer+ bloque.size /2, 0);
+            //        pointer += bloque.size;
 
             coinSpawner();
             if(!player.powerUp && !buffSpawned)
@@ -90,7 +87,7 @@ public class SceneController : MonoBehaviour
         int  coinGenerator = Random.Range(0,coin.Length);
         GameObject moneda = Instantiate(coin[coinGenerator]);
             moneda.transform.SetParent(this.transform);
-            coin monedaclase = moneda.GetComponent<coin>();
+            Coin monedaclase = moneda.GetComponent<Coin>();
             int posicionX = Random.Range(20,40);
             moneda.transform.position = new Vector2(jugador.transform.position.x + posicionX, jugador.transform.position.y);
             
