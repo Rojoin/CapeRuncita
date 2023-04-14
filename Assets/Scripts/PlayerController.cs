@@ -7,9 +7,10 @@ public class PlayerController : MonoBehaviour
 
     [SerializeField] Animator playerAnimator;
     [SerializeField] Animator wolfAnimator;
+    [SerializeField] private Transform raycastOrigin;
 
-    [SerializeField] Collider2D cuerpo;
-
+    private BoxCollider2D collider;
+    private Rigidbody2D rb;
     [SerializeField] UIScore uiScore;
     [SerializeField] private AudioClip pickUp;
     [SerializeField] private AudioClip hurt;
@@ -36,7 +37,7 @@ public class PlayerController : MonoBehaviour
     bool JumpState;
     public bool isDead = false;
     public bool powerUp = false;
-
+    [SerializeField] private float rayDistance;
 
 
     private void Awake()
@@ -45,65 +46,55 @@ public class PlayerController : MonoBehaviour
     }
     void Start()
     {
-
+        collider = GetComponent<BoxCollider2D>();
+        rb = GetComponent<Rigidbody2D>();
+        isDead = false;
     }
 
     // Update is called once per frame
     void Update()
     {
+        grounded = !IsIntheAir();
+        SetAnimatorVariables();
 
-        playerAnimator.SetBool("inAir", inAir);
-        playerAnimator.SetBool("jump", jump);
-        playerAnimator.SetBool("slide", slide);
-        playerAnimator.SetBool("powerUp", powerUp);
-        Debug.Log(grounded);
-        Debug.Log(inAir);
-        if (Input.GetKeyDown("space") && grounded == true && isDead == false)
+        Inputs();
+    }
+
+    private void Inputs()
+    {
+
+        if (Input.GetKeyDown(KeyCode.Space) && grounded)
         {
-            this.GetComponent<Rigidbody2D>().AddForce(new Vector2(0, Jump));
+            Debug.Log("Salto");
+            rb.AddForce(new Vector2(0, Jump));
             JumpState = true;
-        }
-        if (Input.GetKeyDown("space") && grounded == false && isDead == false)
-        {
-            this.GetComponent<Rigidbody2D>().gravityScale = fallSpeed;
-            JumpState = true;
-        }
-
-        if (Input.GetKeyDown("d") && isDead == false)
-        {
-            isDead = true;
-            playerAnimator.SetBool("isDead", isDead);
-
-
         }
         if (Input.GetKeyDown("r") && grounded == true && isDead == false)
         {
             slide = true;
             StartCoroutine(TiempoSlide());
         }
-        else if (Input.GetKeyDown("d") && isDead == true)
-        {
-            isDead = false;
-            playerAnimator.SetBool("isDead", isDead);
-
-        }
-        ;
+  
     }
 
+    private void SetAnimatorVariables()
+    {
+        playerAnimator.SetBool("inAir", inAir);
+        playerAnimator.SetBool("jump", jump);
+        playerAnimator.SetBool("slide", slide);
+        playerAnimator.SetBool("powerUp", powerUp);
+    }
+
+    bool IsIntheAir()
+    {
+        bool doesHit = Physics2D.Raycast(raycastOrigin.position, Vector3.down, rayDistance);
+    
+        return !doesHit;
+    }
 
     private void OnTriggerEnter2D(Collider2D collider)
     {
 
-
-        //if (collider.CompareTag("ground"))
-        //{
-        //    grounded = true;
-        //    inAir = false;
-        //    jump = false;
-        //    JumpState = false;
-        //    this.GetComponent<Rigidbody2D>().gravityScale = 1;
-        //
-        //}
 
         if (collider.CompareTag("Coin"))
         {
@@ -111,7 +102,6 @@ public class PlayerController : MonoBehaviour
 
             collider.gameObject.SetActive(false);
             SoundManager.Instance.PlaySound(pickUp);
-
 
         }
 
@@ -202,12 +192,10 @@ public class PlayerController : MonoBehaviour
         }
 
     }
-    void mantenerBox(Collider2D cuerpo, Collider2D pies)
+
+    void OnDrawGizmos()
     {
-        if (jump)
-        {
-            cuerpo.offset = new Vector2(-0.5f, cuerpo.offset.y);
-            pies.offset = new Vector2(-0.5f, pies.offset.y);
-        }
+        Gizmos.color = Color.red;
+        Gizmos.DrawRay(raycastOrigin.position, Vector3.down * rayDistance);
     }
 }
