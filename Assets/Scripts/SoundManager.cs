@@ -30,7 +30,10 @@ public class SoundManager : MonoBehaviour
         effectSource.PlayOneShot(clip);
     }
 
-
+    public AudioSource GetMusicSource()
+    {
+        return musicSource;
+    }
     public void ToggleAudio()
     {
         effectSource.mute = !effectSource.mute;
