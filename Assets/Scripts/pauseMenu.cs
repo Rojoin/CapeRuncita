@@ -34,11 +34,11 @@ public class pauseMenu : MonoBehaviour
             pauseMenuUI.SetActive(false);
             GameIsPaused = false;
             Time.timeScale = 1f;
-            scenes.timerActive = true;
+         //   scenes.timerActive = true;
     }
     public void Pause()
         {
-            scenes.timerActive = false;
+          //  scenes.timerActive = false;
             pauseMenuUI.SetActive(true);
             GameIsPaused = true;
             Time.timeScale = 0f;

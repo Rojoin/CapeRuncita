@@ -1,112 +1,95 @@
-using System.Collections;
-using System.Collections.Generic;
+
+
 using UnityEngine;
 using UnityEngine.UI;
 
 public class SceneController : MonoBehaviour
 {
-
-    [SerializeField] Text tiempoTranscurrido;
-    [SerializeField] Text puntos;
     [SerializeField] PlayerController player;
-    
-    public GameObject jugador;
-    public Camera mainCamera;
-    
-    public GameObject[] customPrefabs;
-    public GameObject[] coin;
-    public GameObject buff;
+    [SerializeField] private Floor[] floor;
+    [SerializeField] Transform spawnPosition;
+    [SerializeField] Transform endPosition;
+    [SerializeField] GameObject powerUp;
+
     bool buffSpawned;
-    public float pointer;
-    public float safeArea = 12;
-    private Time time;
-    public int Timer;
-    
-    public bool timerActive = false;
-    public float currentTime;
-    public int startSeconds =0;
-    public float nextUpdate =20;
-    int prefabIndex;
- 
-    public int puntosActuales;
+    private float currentVelocity;
+    [SerializeField] private float initialVelocity;
+    private float currentTimer;
+    private float currentBuffTimer;
+    [SerializeField] private float timeUntilUpdate = 20;
+    [SerializeField] private float timeUntilEnd = 3;
+    [SerializeField] private float velocityIncrement;
 
     // Start is called before the first frame update
     void Start()
     {
-        pointer = -7;
-        timerActive= true;
-        currentTime=0;
+        currentTimer = 0;
+        currentVelocity = initialVelocity;
+        foreach (var item in floor)
+        {
+            ResetFloor(item, true);
+            item.SetInitialPosition(spawnPosition.position);
+            item.SetSpeed(currentVelocity);
+            item.SetActiveState(true);
+            item.SetTimeUntilEnd(timeUntilEnd);
+        }
     }
 
-    // Update is called once per frame
+
     void Update()
     {
-        if(timerActive)
-        {
-            currentTime +=1 * Time.deltaTime;
-            tiempoTranscurrido.text = currentTime.ToString("000");
-
-           
-        }
-        if(currentTime == nextUpdate)
-        {
-            player.Velocity = player.Velocity + 0.3f;
-            nextUpdate = nextUpdate +20;
-        }
-        puntos.text = puntosActuales.ToString();
-        
-        while(!player.isDead && pointer<jugador.transform.position.x + safeArea)
-        {
-            prefabIndex = Random.Range(0,customPrefabs.Length-2);
-            if(pointer < 0)
-            {
-                prefabIndex =8;
-            }
-            
-            
-            GameObject objetoBloque = Instantiate(customPrefabs[prefabIndex]);
-            objetoBloque.transform.SetParent(this.transform);
-            //     Bloque bloque = objetoBloque.GetComponent<Bloque>();
-            //     objetoBloque.transform.position = new Vector2(pointer+ bloque.size /2, 0);
-            //        pointer += bloque.size;
-
-            coinSpawner();
-            if(!player.powerUp && !buffSpawned)
-            {
-                buffSpawner();
-            }
-            if(player.powerUp)
-            {
-                StartCoroutine("tiempoSpawnBuffo");
-            }
-        }
-    
+        if (player.isDead) return;
+        timerLogic();
+        MoveScenario();
     }
-    public void coinSpawner()
+
+    private void timerLogic()
     {
-        int  coinGenerator = Random.Range(0,coin.Length);
-        GameObject moneda = Instantiate(coin[coinGenerator]);
-            moneda.transform.SetParent(this.transform);
-            Coin monedaclase = moneda.GetComponent<Coin>();
-            int posicionX = Random.Range(20,40);
-            moneda.transform.position = new Vector2(jugador.transform.position.x + posicionX, jugador.transform.position.y);
-            
+
+        currentTimer += Time.deltaTime;
+        if (!(currentTimer >= timeUntilUpdate)) return;
+        currentVelocity += velocityIncrement;
+        currentTimer -= timeUntilUpdate;
+    }
+
+    private void MoveScenario()
+    {
+        foreach (var item in floor)
+        {
+            item.HorizontalMovement(endPosition.position);
+            item.SetSpeed(currentVelocity);
+            if (isFloorInTheEnd(endPosition, item))
+            {
+                ResetFloor(item);
+            }
+
+        }
     }
     public void buffSpawner()
     {
-            
-            GameObject manzana = Instantiate(buff);
-            manzana.transform.SetParent(this.transform);
-            
-            int posicionX = Random.Range(40,80);
-            manzana.transform.position = new Vector2(jugador.transform.position.x + posicionX, jugador.transform.position.y);
-            buffSpawned =true;
+
+        GameObject manzana = Instantiate(powerUp);
+        manzana.transform.SetParent(this.transform);
+
+        int posicionX = Random.Range(40, 80);
+        manzana.transform.position = new Vector2(0, 0);
+        buffSpawned = true;
     }
-    IEnumerator tiempoSpawnBuffo()
+
+    private bool isFloorInTheEnd(Transform transform, Floor floor)
+    {
+        return transform.position == floor.transform.position;
+    }
+    private void ResetFloor(Floor floor, bool isFirtTime = false)
+    {
+        floor.ResetPosition();
+        floor.ChangeFloorType(isFirtTime);
+        floor.SetActiveState(true);
+        if (!isFirtTime)
         {
-            yield return new WaitForSeconds(10);
-            buffSpawned =false;
+            floor.ResetTimer();
         }
+    }
 }
 
 
