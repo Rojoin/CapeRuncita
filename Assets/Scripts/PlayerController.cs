@@ -25,8 +25,6 @@ public class PlayerController : MonoBehaviour
     [Tooltip("Fuerza del salto")]
     public int Jump;
     [Tooltip("Velocidad Actual")]
-    public float Velocity;
-    float currentVelocity;
     public float fallSpeed;
     public uint score = 0;
 
@@ -124,8 +122,6 @@ public class PlayerController : MonoBehaviour
             if (collider.CompareTag("Buff"))
             {
                 SoundManager.Instance.PlaySound(pickUp);
-                currentVelocity = Velocity;
-                Velocity = Velocity + Velocity / 2;
                 powerUp = true;
                 jump = false;
                 JumpState = false;
@@ -164,7 +160,7 @@ public class PlayerController : MonoBehaviour
     IEnumerator TiempoBuff()
     {
         yield return new WaitForSeconds(powerUpTime);
-        Velocity = currentVelocity;
+    //    Velocity = currentVelocity;
         powerUp = false;
         grounded = true;
         inAir = false;

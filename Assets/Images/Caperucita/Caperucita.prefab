@@ -142,7 +142,6 @@ MonoBehaviour:
   slideTime: 0.2
   powerUpTime: 10
   Jump: 400
-  Velocity: 4
   fallSpeed: 0
   score: 0
   inAir: 0
