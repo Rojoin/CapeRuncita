@@ -18,6 +18,7 @@ public class SceneController : MonoBehaviour
     private float currentBuffTimer;
     [SerializeField] private float timeUntilUpdate = 20;
     [SerializeField] private float timeUntilEnd = 3;
+    [SerializeField] private float gereationOffset = 0.365f;
     [SerializeField] private float velocityIncrement;
 
     // Start is called before the first frame update
@@ -87,8 +88,13 @@ public class SceneController : MonoBehaviour
         floor.SetActiveState(true);
         if (!isFirtTime)
         {
-            floor.ResetTimer();
+            floor.ResetTimer(-gereationOffset);
         }
+    }
+
+    void OnDrawGizmos()
+    {
+        Gizmos.DrawSphere(Vector3.Lerp(spawnPosition.position,endPosition.position,0.5f),0.5f );
     }
 }
 

@@ -64,8 +64,12 @@ public class PlayerController : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Space) && grounded)
         {
             Debug.Log("Salto");
-            rb.AddForce(new Vector2(0, Jump));
+            rb.AddForce(new Vector2(0, Jump),ForceMode2D.Impulse);
             JumpState = true;
+        }
+        else if (Input.GetKeyDown(KeyCode.Space) && !grounded)
+        {
+            rb.velocity = new Vector2(0,-fallSpeed);
         }
         if (Input.GetKeyDown("r") && grounded == true && isDead == false)
         {
@@ -85,9 +89,13 @@ public class PlayerController : MonoBehaviour
 
     bool IsIntheAir()
     {
+       
         bool doesHit = Physics2D.Raycast(raycastOrigin.position, Vector3.down, rayDistance);
-    
-        return !doesHit;
+        if (doesHit)
+        {
+            return !Physics2D.Raycast(raycastOrigin.position, Vector3.down, rayDistance).collider.CompareTag("ground");
+        }
+        return true;
     }
 
     private void OnTriggerEnter2D(Collider2D collider)

@@ -65,9 +65,9 @@ public class Floor : MonoBehaviour
 
     }
 
-    public void ResetTimer()
+    public void ResetTimer(float value  )
     {
-        timer = 0.0f;
+        timer = value;
     }
 
     public void SetSpeed(float speed)
