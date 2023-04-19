@@ -1,13 +1,8 @@
-using System.Collections;
-using System.Collections.Generic;
-using System.Numerics;
 using UnityEngine;
-using Vector3 = UnityEngine.Vector3;
 
 public class Floor : MonoBehaviour
 {
     [SerializeField] GameObject[] floorTypes;
-    private float timeUntilEnd;
     private float speed;
     private Vector3 initialPos;
     [SerializeField] private float initialTimer;
@@ -17,10 +12,20 @@ public class Floor : MonoBehaviour
 
     void Start()
     {
-        timer = initialTimer;
+        InitTimer();
     }
 
     void Update()
+    {
+        MoveFloor();
+    }
+
+    private void InitTimer()
+    {
+        timer = initialTimer;
+    }
+
+    private void MoveFloor()
     {
         if (activeState)
         {
@@ -65,7 +70,7 @@ public class Floor : MonoBehaviour
 
     }
 
-    public void ResetTimer(float value  )
+    public void ResetTimer(float value)
     {
         timer = value;
     }
@@ -74,9 +79,5 @@ public class Floor : MonoBehaviour
     {
         this.speed = speed;
     }
-    public void SetTimeUntilEnd(float time)
-    {
-        this.timeUntilEnd = time;
-    }
-
+ 
 }

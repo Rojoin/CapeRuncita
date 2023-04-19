@@ -1,13 +1,10 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
 
-    [SerializeField] Animator playerAnimator;
-    [SerializeField] Animator wolfAnimator;
-    [SerializeField] private Transform raycastOrigin;
+
 
     private BoxCollider2D collider;
     private Rigidbody2D rb;
@@ -15,45 +12,41 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private AudioClip pickUp;
     [SerializeField] private AudioClip hurt;
     [SerializeField] private AudioClip PowerUp;
+    [SerializeField] Animator playerAnimator;
+    [SerializeField] Animator wolfAnimator;
+    [SerializeField] private Transform raycastOrigin;
+    [SerializeField] private float rayDistance;
 
-
-    [Tooltip("El tiempo que dura el slide")]
     [SerializeField] float slideTime;
-
-    [Tooltip("El tiempo que dura la invinsibilidad")]
     [SerializeField] float powerUpTime;
-    [Tooltip("Fuerza del salto")]
+
     public int Jump;
-    [Tooltip("Velocidad Actual")]
     public float fallSpeed;
     public uint score = 0;
-
     public bool inAir = false;
     public bool grounded = true;
     public bool isJumping = false;
     public bool slide = false;
     public bool isDead = false;
-    public bool powerUp = false;
-    [SerializeField] private float rayDistance;
 
 
-    private void Awake()
-    {
-
-    }
     void Start()
     {
-        collider = GetComponent<BoxCollider2D>();
-        rb = GetComponent<Rigidbody2D>();
-        isDead = false;
+        Init();
     }
 
-    // Update is called once per frame
+
     void Update()
     {
         grounded = !IsIntheAir();
         CheckAirDistance();
         SetAnimatorVariables();
+    }
+    private void Init()
+    {
+        collider = GetComponent<BoxCollider2D>();
+        rb = GetComponent<Rigidbody2D>();
+        isDead = false;
     }
 
 
@@ -95,7 +88,6 @@ public class PlayerController : MonoBehaviour
         playerAnimator.SetBool("Slide", slide);
         playerAnimator.SetBool("Ground", grounded);
     }
-
     bool IsIntheAir()
     {
         bool doesHit = Physics2D.Raycast(raycastOrigin.position, Vector3.down, rayDistance);
@@ -105,7 +97,6 @@ public class PlayerController : MonoBehaviour
         }
         return true;
     }
-
     private void OnTriggerEnter2D(Collider2D collider)
     {
         if (collider.CompareTag("Coin"))
@@ -116,34 +107,20 @@ public class PlayerController : MonoBehaviour
         }
 
         uiScore.SetScore(score);
-        if (!powerUp)
+
+        if (collider.tag == "Obstaculo" || (collider.tag == "Tronco" && !slide))
         {
-            if (collider.tag == "Obstaculo" || (collider.tag == "Tronco" && !slide))
-            {
-                deathSecuence();
-            }
-            if (collider.CompareTag("Buff"))
-            {
-                SoundManager.Instance.PlaySound(pickUp);
-                powerUp = true;
-                isJumping = false;
-                Debug.Log(powerUp);
-                collider.gameObject.SetActive(false);
-                StartCoroutine(TiempoBuff());
-            }
+            DeathSequence();
         }
 
+
     }
-
-
-    private void deathSecuence()
+    private void DeathSequence()
     {
         isDead = true;
         wolfAnimator.SetBool("playerDeath", isDead);
         playerAnimator.SetTrigger("Dead");
     }
-
-
 
     IEnumerator TiempoSlide()
     {
@@ -151,24 +128,6 @@ public class PlayerController : MonoBehaviour
         slide = false;
         playerAnimator.SetBool("Slide", slide);
     }
-    IEnumerator TiempoMuerto()
-    {
-
-        yield return new WaitForSeconds(5);
-        GameObject.Destroy(this.gameObject);
-    }
-    IEnumerator TiempoBuff()
-    {
-        yield return new WaitForSeconds(powerUpTime);
-        //    Velocity = currentVelocity;
-        powerUp = false;
-        grounded = true;
-        inAir = false;
-        isJumping = false;
-        //  soundManager.SelecionarAudio(2,0.5f);
-
-    }
-
 
     void OnDrawGizmos()
     {
