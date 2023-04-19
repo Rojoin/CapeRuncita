@@ -34,7 +34,7 @@ public class SceneController : MonoBehaviour
     void Update()
     {
         if (player.isDead) return;
-        timerLogic();
+        TimerLogic();
         MoveScenario();
     }
     private void Init()
@@ -50,9 +50,8 @@ public class SceneController : MonoBehaviour
         }
     }
 
-    private void timerLogic()
+    private void TimerLogic()
     {
-
         currentTimer += Time.deltaTime;
         if (!(currentTimer >= timeUntilUpdate)) return;
         currentVelocity += velocityIncrement;
