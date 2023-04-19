@@ -5414,6 +5414,10 @@ PrefabInstance:
       value: 15
       objectReference: {fileID: 0}
     - target: {fileID: 7139960019547071044, guid: 0c2280b408dfbd0498ee758c05b7e45d, type: 3}
+      propertyPath: slideTime
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7139960019547071044, guid: 0c2280b408dfbd0498ee758c05b7e45d, type: 3}
       propertyPath: rayDistance
       value: 0.15
       objectReference: {fileID: 0}
@@ -5468,6 +5472,14 @@ PrefabInstance:
     - target: {fileID: 7139960019547071048, guid: 0c2280b408dfbd0498ee758c05b7e45d, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7139960019547071050, guid: 0c2280b408dfbd0498ee758c05b7e45d, type: 3}
+      propertyPath: m_SpriteTilingProperty.oldSize.x
+      value: 7.6
+      objectReference: {fileID: 0}
+    - target: {fileID: 7139960019547071050, guid: 0c2280b408dfbd0498ee758c05b7e45d, type: 3}
+      propertyPath: m_SpriteTilingProperty.oldSize.y
+      value: 6.510381
       objectReference: {fileID: 0}
     - target: {fileID: 7139960019547071051, guid: 0c2280b408dfbd0498ee758c05b7e45d, type: 3}
       propertyPath: m_Mass

@@ -30,9 +30,8 @@ public class PlayerController : MonoBehaviour
 
     public bool inAir = false;
     public bool grounded = true;
-    public bool jump = false;
+    public bool isJumping = false;
     public bool slide = false;
-    bool JumpState;
     public bool isDead = false;
     public bool powerUp = false;
     [SerializeField] private float rayDistance;
@@ -53,8 +52,8 @@ public class PlayerController : MonoBehaviour
     void Update()
     {
         grounded = !IsIntheAir();
+        CheckAirDistance();
         SetAnimatorVariables();
-
     }
 
 
@@ -64,7 +63,7 @@ public class PlayerController : MonoBehaviour
         {
             Debug.Log("Salto");
             rb.AddForce(new Vector2(0, Jump), ForceMode2D.Impulse);
-            JumpState = true;
+            isJumping = true;
         }
         else
         {
@@ -82,12 +81,19 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    private void CheckAirDistance()
+    {
+        if (isJumping && rb.velocity.y <0.0f)
+        {
+            isJumping = false;
+        }
+    }
     private void SetAnimatorVariables()
     {
         playerAnimator.SetBool("inAir", inAir);
-        playerAnimator.SetBool("jump", jump);
-        playerAnimator.SetBool("slide", slide);
-        playerAnimator.SetBool("powerUp", powerUp);
+        playerAnimator.SetBool("jump", isJumping);
+        playerAnimator.SetBool("Slide", slide);
+        playerAnimator.SetBool("Ground", grounded);
     }
 
     bool IsIntheAir()
@@ -119,16 +125,13 @@ public class PlayerController : MonoBehaviour
             if (collider.tag == "Obstaculo" | collider.tag == "Tronco" && slide == false)
             {
                 Debug.Log("Moriste");
-                // soundManager.SelecionarAudio(3,0.5f);
                 deathSecuence();
-
             }
             if (collider.CompareTag("Buff"))
             {
                 SoundManager.Instance.PlaySound(pickUp);
                 powerUp = true;
-                jump = false;
-                JumpState = false;
+                isJumping = false;
                 Debug.Log(powerUp);
                 collider.gameObject.SetActive(false);
                 //soundManager.SelecionarAudio(1,0.5f);
@@ -143,7 +146,7 @@ public class PlayerController : MonoBehaviour
     {
         isDead = true;
         wolfAnimator.SetBool("playerDeath", isDead);
-        playerAnimator.SetBool("isDead", isDead);
+        playerAnimator.SetTrigger("Dead");
         //StartCoroutine(TiempoMuerto());
 
     }
@@ -154,6 +157,7 @@ public class PlayerController : MonoBehaviour
     {
         yield return new WaitForSeconds(slideTime);
         slide = false;
+        playerAnimator.SetBool("Slide", slide);
     }
     IEnumerator TiempoMuerto()
     {
@@ -164,34 +168,15 @@ public class PlayerController : MonoBehaviour
     IEnumerator TiempoBuff()
     {
         yield return new WaitForSeconds(powerUpTime);
-    //    Velocity = currentVelocity;
+        //    Velocity = currentVelocity;
         powerUp = false;
         grounded = true;
         inAir = false;
-        jump = false;
-        JumpState = false;
+        isJumping = false;
         //  soundManager.SelecionarAudio(2,0.5f);
 
     }
 
-    private void OnTriggerExit2D(Collider2D collider)
-    {
-
-        // StartCoroutine(TiempoEntrePlataformas());
-        //  grounded  =false;
-        //  inAir =true;
-        if (!JumpState)
-        {
-
-        }
-        if (JumpState == true)
-        {
-            jump = true;
-            grounded = false;
-            inAir = true;
-        }
-
-    }
 
     void OnDrawGizmos()
     {
