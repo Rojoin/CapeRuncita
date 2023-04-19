@@ -3,9 +3,6 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-
-
-
     private BoxCollider2D bc;
     private Rigidbody2D rb;
     [SerializeField] UIScore uiScore;
