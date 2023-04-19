@@ -1635,7 +1635,7 @@ MonoBehaviour:
   end: {fileID: 1176560376}
   start: {fileID: 1310744987}
   initialTimer: 0
-  speed: 0.12
+  speed: 0.1
 --- !u!212 &695559152
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -1948,7 +1948,7 @@ MonoBehaviour:
   end: {fileID: 1176560376}
   start: {fileID: 1310744987}
   initialTimer: 0.5
-  speed: 0.15
+  speed: 0.07
 --- !u!212 &806114484
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -2110,7 +2110,7 @@ MonoBehaviour:
   end: {fileID: 1176560376}
   start: {fileID: 1310744987}
   initialTimer: 0
-  speed: 0.09
+  speed: 0.18
 --- !u!212 &890802841
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -2570,7 +2570,7 @@ MonoBehaviour:
   end: {fileID: 1176560376}
   start: {fileID: 1310744987}
   initialTimer: 0.5
-  speed: 0.09
+  speed: 0.18
 --- !u!212 &1016839566
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -2671,7 +2671,7 @@ MonoBehaviour:
   end: {fileID: 1176560376}
   start: {fileID: 1310744987}
   initialTimer: 0
-  speed: 0.15
+  speed: 0.07
 --- !u!212 &1081206564
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -5291,7 +5291,7 @@ MonoBehaviour:
   end: {fileID: 1176560376}
   start: {fileID: 1310744987}
   initialTimer: 0.5
-  speed: 0.12
+  speed: 0.1
 --- !u!212 &2112741278
 SpriteRenderer:
   m_ObjectHideFlags: 0
