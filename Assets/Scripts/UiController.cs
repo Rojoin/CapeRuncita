@@ -9,17 +9,18 @@ public class UiController : MonoBehaviour
     [SerializeField]
     private PlayerController player;
     [SerializeField]
-    private AudioClip gameplayMusic;
+    private AudioClip[] gameplayMusic;
     [SerializeField]
     private AudioClip gameOverMusic;
     [SerializeField]
     private AudioClip previousClip;
-    [SerializeField]
     private AudioSource music;
+    private int songId;
 
     private void Start()
     {
         music = SoundManager.Instance.GetMusicSource();
+        songId = Random.Range(0, gameplayMusic.Length);
     }
     void Update()
     {
@@ -30,7 +31,7 @@ public class UiController : MonoBehaviour
 
     private void MusicController()
     {
-        music.clip = player.isDead ? gameOverMusic : gameplayMusic;
+        music.clip = player.isDead ? gameOverMusic : gameplayMusic[songId];
         if (previousClip != music.clip)
         {
             music.Play();
