@@ -89,7 +89,6 @@ public class PlayerController : MonoBehaviour
 
     bool IsIntheAir()
     {
-       
         bool doesHit = Physics2D.Raycast(raycastOrigin.position, Vector3.down, rayDistance);
         if (doesHit)
         {
@@ -100,24 +99,18 @@ public class PlayerController : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collider)
     {
-
-
         if (collider.CompareTag("Coin"))
         {
             score += 10;
-
             collider.gameObject.SetActive(false);
             SoundManager.Instance.PlaySound(pickUp);
-
         }
-
 
         uiScore.SetScore(score);
         if (!powerUp)
         {
             if (collider.tag == "Obstaculo" && slide == true)
             {
-
                 deathSecuence();
             }
             if (collider.tag == "Obstaculo" | collider.tag == "Tronco" && slide == false)

@@ -10,6 +10,7 @@ public class UIScore : MonoBehaviour
     void Awake()
     {
         textMesh = GetComponent<TextMeshProUGUI>();
+        
     }
 
     public void SetScore(uint currentScore)
