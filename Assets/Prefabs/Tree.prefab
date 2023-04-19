@@ -97,7 +97,7 @@ GameObject:
   - component: {fileID: 8584041647241161706}
   - component: {fileID: 8584041647241161707}
   m_Layer: 0
-  m_Name: NO USAR 1
+  m_Name: Tree
   m_TagString: Tronco
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
