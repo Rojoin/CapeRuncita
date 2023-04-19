@@ -2,14 +2,17 @@ using UnityEngine;
 
 public class Parallax : MonoBehaviour
 {
-    [SerializeField] private Transform end;
+    [SerializeField]
+    private Transform end;
     private Vector3 endpos;
-    [SerializeField] private Transform start;
+    [SerializeField]
+    private Transform start;
     private Vector3 startpos;
 
-    [SerializeField] float initialTimer;
-
-    [SerializeField] float speed;
+    [SerializeField]
+    private float initialTimer;
+    [SerializeField]
+    private float speed;
     private float timer;
 
     private void Start()

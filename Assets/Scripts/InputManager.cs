@@ -5,8 +5,10 @@ public class InputManager : MonoBehaviour
     private Vector2 fingerDown;
     private Vector2 fingerUp;
 
-    [SerializeField] private float minDistanceForSwipe = 20f;
-    [SerializeField] private PlayerController player;
+    [SerializeField]
+    private float minDistanceForSwipe = 20f;
+    [SerializeField]
+    private PlayerController player;
 
     private void Update()
     {

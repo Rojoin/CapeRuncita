@@ -6,19 +6,16 @@ public class PlayerController : MonoBehaviour
 
 
 
-    private BoxCollider2D collider;
+    private BoxCollider2D bc;
     private Rigidbody2D rb;
     [SerializeField] UIScore uiScore;
     [SerializeField] private AudioClip pickUp;
     [SerializeField] private AudioClip hurt;
-    [SerializeField] private AudioClip PowerUp;
     [SerializeField] Animator playerAnimator;
     [SerializeField] Animator wolfAnimator;
     [SerializeField] private Transform raycastOrigin;
     [SerializeField] private float rayDistance;
-
     [SerializeField] float slideTime;
-    [SerializeField] float powerUpTime;
 
     public int Jump;
     public float fallSpeed;
@@ -44,7 +41,7 @@ public class PlayerController : MonoBehaviour
     }
     private void Init()
     {
-        collider = GetComponent<BoxCollider2D>();
+        bc = GetComponent<BoxCollider2D>();
         rb = GetComponent<Rigidbody2D>();
         isDead = false;
     }
@@ -70,7 +67,11 @@ public class PlayerController : MonoBehaviour
         {
             Debug.Log("Sliding");
             slide = true;
-            StartCoroutine(TiempoSlide());
+            StartCoroutine(SlideTime());
+        }
+        else
+        {
+            JumpMovement();
         }
     }
 
@@ -122,7 +123,7 @@ public class PlayerController : MonoBehaviour
         playerAnimator.SetTrigger("Dead");
     }
 
-    IEnumerator TiempoSlide()
+    IEnumerator SlideTime()
     {
         yield return new WaitForSeconds(slideTime);
         slide = false;

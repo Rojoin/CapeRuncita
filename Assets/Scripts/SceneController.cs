@@ -3,15 +3,13 @@ using UnityEngine;
 public class SceneController : MonoBehaviour
 {
     [SerializeField]
-    PlayerController player;
+    private PlayerController player;
     [SerializeField]
     private Floor[] floor;
     [SerializeField]
-    Transform spawnPosition;
+    private Transform spawnPosition;
     [SerializeField]
-    Transform endPosition;
-    [SerializeField]
-    GameObject powerUp;
+    private Transform endPosition;
 
     private float currentTimer;
     private float currentVelocity;
