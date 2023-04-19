@@ -83,7 +83,7 @@ public class PlayerController : MonoBehaviour
 
     private void CheckAirDistance()
     {
-        if (isJumping && rb.velocity.y <0.0f)
+        if (isJumping && rb.velocity.y < 0.0f)
         {
             isJumping = false;
         }
@@ -118,13 +118,8 @@ public class PlayerController : MonoBehaviour
         uiScore.SetScore(score);
         if (!powerUp)
         {
-            if (collider.tag == "Obstaculo" && slide == true)
+            if (collider.tag == "Obstaculo" || (collider.tag == "Tronco" && !slide))
             {
-                deathSecuence();
-            }
-            if (collider.tag == "Obstaculo" | collider.tag == "Tronco" && slide == false)
-            {
-                Debug.Log("Moriste");
                 deathSecuence();
             }
             if (collider.CompareTag("Buff"))
@@ -134,7 +129,6 @@ public class PlayerController : MonoBehaviour
                 isJumping = false;
                 Debug.Log(powerUp);
                 collider.gameObject.SetActive(false);
-                //soundManager.SelecionarAudio(1,0.5f);
                 StartCoroutine(TiempoBuff());
             }
         }
@@ -147,8 +141,6 @@ public class PlayerController : MonoBehaviour
         isDead = true;
         wolfAnimator.SetBool("playerDeath", isDead);
         playerAnimator.SetTrigger("Dead");
-        //StartCoroutine(TiempoMuerto());
-
     }
 
 

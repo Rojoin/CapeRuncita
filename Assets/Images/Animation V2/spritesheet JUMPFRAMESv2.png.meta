@@ -166,7 +166,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 548
-        y: 3462
+        y: 3466
         width: 760
         height: 651
       alignment: 0
@@ -186,9 +186,9 @@ TextureImporter:
       name: spritesheet JUMPFRAMESv2_1
       rect:
         serializedVersion: 2
-        x: 2715
-        y: 3429
-        width: 563
+        x: 2497
+        y: 3433
+        width: 817
         height: 746
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
@@ -207,9 +207,9 @@ TextureImporter:
       name: spritesheet JUMPFRAMESv2_2
       rect:
         serializedVersion: 2
-        x: 4650
-        y: 3448
-        width: 481
+        x: 4327
+        y: 3427
+        width: 817
         height: 473
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
@@ -312,9 +312,9 @@ TextureImporter:
       name: spritesheet JUMPFRAMESv2_7
       rect:
         serializedVersion: 2
-        x: 2591
-        y: 1260
-        width: 789
+        x: 2463
+        y: 1277
+        width: 924
         height: 826
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
@@ -333,9 +333,9 @@ TextureImporter:
       name: spritesheet JUMPFRAMESv2_8
       rect:
         serializedVersion: 2
-        x: 4391
-        y: 1297
-        width: 760
+        x: 4357
+        y: 1314
+        width: 817
         height: 650
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
@@ -354,9 +354,9 @@ TextureImporter:
       name: spritesheet JUMPFRAMESv2_9
       rect:
         serializedVersion: 2
-        x: 623
-        y: 115
-        width: 687
+        x: 481
+        y: 123
+        width: 817
         height: 934
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
@@ -375,9 +375,9 @@ TextureImporter:
       name: spritesheet JUMPFRAMESv2_10
       rect:
         serializedVersion: 2
-        x: 2497
-        y: 146
-        width: 734
+        x: 2426
+        y: 150
+        width: 817
         height: 903
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
