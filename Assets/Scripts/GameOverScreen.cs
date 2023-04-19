@@ -8,7 +8,7 @@ public class GameOverScreen : MonoBehaviour
     [SerializeField] TextMeshProUGUI score;
     [SerializeField] TextMeshProUGUI highScore;
     [SerializeField] UIScore scoreValue;
-
+    [SerializeField] private AudioClip mainMusic;
     void Start()
     {
         gameObject.SetActive(false);
@@ -48,6 +48,7 @@ public class GameOverScreen : MonoBehaviour
     public void ReturnToMenu()
     {
         SoundManager.Instance.PlaySound(SoundManager.Instance.button);
+        SoundManager.Instance.GetMusicSource().clip = mainMusic;
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex-1);
     }
 }

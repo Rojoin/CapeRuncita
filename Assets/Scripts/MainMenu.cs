@@ -9,7 +9,14 @@ public class MainMenu : MonoBehaviour
     public bool creditsOn = false;
     [SerializeField] GameObject screenMenu;
     [SerializeField] GameObject screenCredits;
+    [SerializeField] private AudioClip mainMusic;
 
+    void Start()
+    {
+        var music = SoundManager.Instance.GetMusicSource();
+        music.clip = mainMusic;
+       music.Play();
+    }
     void Update()
     {
         ScreenVisibility(screenMenu, !creditsOn);
