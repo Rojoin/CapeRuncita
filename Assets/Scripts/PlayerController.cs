@@ -55,28 +55,31 @@ public class PlayerController : MonoBehaviour
         grounded = !IsIntheAir();
         SetAnimatorVariables();
 
-        Inputs();
     }
 
-    private void Inputs()
-    {
 
-        if (Input.GetKeyDown(KeyCode.Space) && grounded)
+    public void JumpMovement()
+    {
+        if (grounded)
         {
             Debug.Log("Salto");
-            rb.AddForce(new Vector2(0, Jump),ForceMode2D.Impulse);
+            rb.AddForce(new Vector2(0, Jump), ForceMode2D.Impulse);
             JumpState = true;
         }
-        else if (Input.GetKeyDown(KeyCode.Space) && !grounded)
+        else
         {
-            rb.velocity = new Vector2(0,-fallSpeed);
+            rb.velocity = new Vector2(0, -fallSpeed);
         }
-        if (Input.GetKeyDown("r") && grounded == true && isDead == false)
+    }
+
+    public void SlideMovement()
+    {
+        if (grounded)
         {
+            Debug.Log("Sliding");
             slide = true;
             StartCoroutine(TiempoSlide());
         }
-  
     }
 
     private void SetAnimatorVariables()

@@ -1,45 +1,42 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class InputManager : MonoBehaviour
 {
-
     private Vector2 fingerDown;
     private Vector2 fingerUp;
 
     public float minDistanceForSwipe = 20f;
+    [SerializeField] private PlayerController player;
 
-    void Update()
+    private void Update()
     {
-        if (Input.touchCount == 1)
+        if (player.isDead) return;
+
+        if (Input.touchCount != 1) return;
+        var touch = Input.GetTouch(0);
+
+        if (touch.phase == TouchPhase.Began)
         {
-            Touch touch = Input.GetTouch(0);
+            fingerDown = touch.position;
+            fingerUp = touch.position;
+        }
 
-            if (touch.phase == TouchPhase.Began)
-            {
-                fingerDown = touch.position;
-                fingerUp = touch.position;
-            }
+        if (touch.phase == TouchPhase.Moved)
+        {
+            fingerUp = touch.position;
+        }
+        if (touch.phase == TouchPhase.Ended)
+        {
+            fingerUp = touch.position;
 
-            if (touch.phase == TouchPhase.Moved)
-            {
-                fingerUp = touch.position;
-            }
-
-            if (touch.phase == TouchPhase.Ended)
-            {
-                fingerUp = touch.position;
-
-                if (IsSwipeDown())
-                {
-                  
-                }
-            }
+            if (IsSwipeDown())
+                player.SlideMovement();
+            else
+                player.JumpMovement();
         }
     }
 
-    bool IsSwipeDown()
+    private bool IsSwipeDown()
     {
         return fingerDown.y - fingerUp.y > minDistanceForSwipe;
     }
